@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Donation Page</title>
+</head>
+<body>
+    <h1><b>!!NIKO TALENTED!!</b></h1>
+    <h2>PROPOSAL/ABOUT</h2>
+    <p>loremj  ugdyegg2gqm ygwdiuiuhsiuhs 1uhoiushi1ugiugsi1ug2iugi1uisu1i2ui1u2giusg1iugis1ugiu1iuugs1iugiusg1iugi1ug2iugiugi1ugi1u2gi1u2giuegi1ug2iwug1`iu2gwi1u2hiwu1iu2gwi1`u2giwugi1u2gwi1u2giw1ug2iuwgi1u2gwi12ugwi2</p>
+    <form id="donationForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="amount">Amount (KES):</label>
+        <input type="numbers" id="amount" name="amount" required><br><br>
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required><br><br>
+        <button type="submit" id="button"><b>Donate</b></button>
+    </form>
+    <div class="footnote">
+        <img src="images/logo.jpg" id="image1">
+         <img src="images/logo.jpg" id="image2">
+    </div>
+
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('donationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const amount = document.getElementById('amount').value;
+            const phone = document.getElementById('phone').value;
+            const billRefNumber = 'Donation123';
+
+            fetch('/initiatePayment.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    amount: amount,
+                    phone: phone,
+                    billRefNumber: billRefNumber
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = data.message;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
